@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 import useFavorite from '../hooks/useFavorite';
 
-import { getArtistAlbums } from '../services/albums';
+import Loader from '../components/Loader';
 import Pagination from '../components/Pagination';
+import { getArtistAlbums } from '../services/albums';
 import { BookmarkIcon, Title } from '../styles/common.styles';
 import { Card, CoverImage, Text, AlbumDetailsWrapper, DetailWrapper } from '../styles/AlbumCard.styles';
 
@@ -34,7 +35,7 @@ const ArtistDetails = () => {
       addAlbumToFavorites(id, album);
     }
   };
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
   if (error) return <div>Error loading album details</div>;
 
   return (

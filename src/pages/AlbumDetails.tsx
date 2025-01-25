@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAlbum } from '../services/albums';
 import { BookmarkIcon } from '../styles/common.styles';
 
+import Loader from '../components/Loader';
 import { Title } from '../styles/common.styles';
 import { Card, CoverImage, Text, AlbumDetailsWrapper, ArtistName } from '../styles/AlbumCard.styles';
 
@@ -28,7 +29,7 @@ const AlbumDetails = () => {
     setBookmarked(!bookmarked);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
   if (error) return <div>Error loading album details</div>;
 
   return (

@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
+import Loader from '../components/Loader';
 import { getArtists } from '../services/artists';
 import Pagination from '../components/Pagination';
 import { ArtistName } from '../styles/Artist.styles';
@@ -24,7 +25,7 @@ const ArtistList = () => {
     navigate(`/artists/${id}`);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
   if (error) return <div>Error loading artists</div>;
 
   return (

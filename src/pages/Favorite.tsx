@@ -30,6 +30,9 @@ const Favorite = () => {
         <Headline>Favorite Albums</Headline>
       </div>
       <List>
+        {!favorites.albums.length && (
+          <Title>No favorite albums</Title>
+        )}
         {favorites.albums.map((album) => (
           <Card key={album.id} onClick={() => handleAlbumClick(album.id)}>
             <CoverImage src={album.thumb} alt={album.title} />

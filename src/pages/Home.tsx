@@ -8,6 +8,7 @@ import Pagination from '../components/Pagination';
 
 import { HomeContainer } from '../styles/Home.styles';
 import { CardWrapper, Container, Headline } from '../styles/common.styles';
+import Loader from '../components/Loader';
 
 const Home = () => {
   const [searchText, setSearchText] = React.useState('');
@@ -62,7 +63,7 @@ const Home = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   const getFiltersString = () => {
