@@ -1,4 +1,4 @@
-import queryString from "query-string";
+import { getStringifiedQuery } from '../utils/helpers'
 
 const DISCOGS_API_KEY = import.meta.env.VITE_DISCOGS_API_KEY;
 const DISCOGS_API_SECRET = import.meta.env.VITE_DISCOGS_API_SECRET;
@@ -16,30 +16,9 @@ class DiscogsService {
     return response.json();
   }
 
-  private static getStringifiedQuery(query: Record<string, string>) {
-    if (Object.keys(query).length === 0) {
-      return '';
-    }
-
-    const { searchText, ...otherParams } = query;
-    let stringifiedQuery = '';
-
-    if (searchText) {
-      stringifiedQuery = `q=${encodeURIComponent(searchText)}`;
-    }
-
-    const additionalParams = queryString.stringify(otherParams);
-
-    if (additionalParams) {
-      stringifiedQuery += `&${additionalParams}`;
-    }
-
-    return stringifiedQuery;
-  }
-
   static async search(query: Record<string, string> = {}) {
     try {
-      const q = this.getStringifiedQuery(query);
+      const q = getStringifiedQuery(query);
 
       const response = await fetch(`${DISCOGS_API_BASE_URL}/database/search?${q}&key=${DISCOGS_API_KEY}&secret=${DISCOGS_API_SECRET}`)
 
@@ -64,9 +43,11 @@ class DiscogsService {
     }
   };
 
-  static getArtistAlbums = async (artistId) => {
+  static getArtistAlbums = async (artistId, query) => {
     try {
-      const response = await fetch(`${DISCOGS_API_BASE_URL}/artists/${artistId}/releases?key=${DISCOGS_API_KEY}&secret=${DISCOGS_API_SECRET}`);
+      const q = getStringifiedQuery(query);
+
+      const response = await fetch(`${DISCOGS_API_BASE_URL}/artists/${artistId}/releases?${q}&key=${DISCOGS_API_KEY}&secret=${DISCOGS_API_SECRET}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

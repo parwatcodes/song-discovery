@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import Artist from './pages/Artist';
 import Favorite from './pages/Favorite';
 import AlbumDetails from './pages/AlbumDetails';
-import ArtistDetails from './pages/ArtistDetails';
+import ArtistAlbums from './pages/ArtistAlbums';
 
 import { GlobalStyles } from './styles/GlobalStyles';
 
@@ -19,9 +19,9 @@ const App: React.FC = () => {
       <Layout />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/album/:id" element={<AlbumDetails />} />
+        <Route path="/albums/:id" element={<AlbumDetails />} />
         <Route path="/artists" element={<Artist />} />
-        <Route path="/artists/:id" element={<ArtistDetails />} />
+        <Route path="/artists/:id/albums" element={<ArtistAlbums />} />
         <Route path="/favorites" element={<Favorite />} />
       </Routes>
     </Router>

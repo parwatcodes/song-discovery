@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { getAlbum } from '../services/albums';
 import { BookmarkIcon } from '../styles/common.styles';
 
-import Loader from '../components/Loader';
-import { Title } from '../styles/common.styles';
-import { Card, CoverImage, Text, AlbumDetailsWrapper, ArtistName } from '../styles/AlbumCard.styles';
+import Loader from '../components/shared/Loader';
+import { AlbumTitle, Card, Headline } from '../styles/common.styles';
+import { CoverImage, Text, ArtistName, DetailItem, ItemWrapper, DetailWrapper } from '../styles/AlbumCard.styles';
 
 const AlbumDetails = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const AlbumDetails = () => {
   });
 
   const handleOnArtistClick = (id) => {
-    navigate(`/artists/${id}`);
+    navigate(`/artists/${id}/albums`);
   };
 
   const handleBookmarkClick = (e: React.MouseEvent) => {
@@ -33,41 +33,61 @@ const AlbumDetails = () => {
   if (error) return <div>Error loading album details</div>;
 
   return (
-    <AlbumDetailsWrapper style={{
-      justifyContent: 'space-evenly',
-      flexDirection: 'row'
-    }}>
+    <>
       <div style={{
         display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-        margin: '10px'
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        flexDirection: 'column'
       }}>
-        <h1>Album: {data.title}</h1>
-        <h1>Released: {data.released}</h1>
-        <h1>Genre: {data.genres.join(", ")}</h1>
-        <h1>Artist: { }
-          {data.artists.map((artist) => (
-            <ArtistName
-              key={artist.id}
-              onClick={() => handleOnArtistClick(artist.id)}
-            >
-              {artist.name}
-            </ArtistName>
-          ))}
-        </h1>
+        {/* <Headline>Album Details</Headline> */}
+
+        <div style={{ display: 'flex', gap: '40px', marginTop: '40px' }}>
+          <ItemWrapper>
+            <DetailItem>
+              <span>Album:</span>
+              <h1>{data.title}</h1>
+            </DetailItem>
+            <DetailItem>
+              <span>Released:</span>
+              <h1>{data.released}</h1>
+            </DetailItem>
+            <DetailItem>
+              <span>Country:</span>
+              <h1>{data.country}</h1>
+            </DetailItem>
+            <DetailItem>
+              <span>Genres:</span>
+              <h1>{data.genres.join(", ")}</h1>
+            </DetailItem>
+            <div>
+              <span>Artist:</span>
+              {data.artists.map((artist) => (
+                <ArtistName
+                  key={artist.id}
+                  onClick={() => handleOnArtistClick(artist.id)}
+                >
+                  {artist.name}
+                </ArtistName>
+              ))}
+            </div>
+          </ItemWrapper>
+          <Card>
+            <CoverImage src={data.thumb} alt={data.title} />
+            <DetailWrapper>
+              <AlbumTitle>{data.title}</AlbumTitle>
+              <Text>{data.year}</Text>
+              <Text>{data.country}</Text>
+              <Text>{data.description}</Text>
+            </DetailWrapper>
+            <BookmarkIcon onClick={handleBookmarkClick}>
+              {bookmarked ? '❤️' : '🤍'}
+            </BookmarkIcon>
+          </Card>
+        </div>
       </div>
-      <Card>
-        <CoverImage src={data.thumb} alt={data.title} />
-        <Title>{data.title}</Title>
-        <Text>{data.year}</Text>
-        <Text>{data.country}</Text>
-        <Text>{data.description}</Text>
-      <BookmarkIcon onClick={handleBookmarkClick}>
-        {bookmarked ? '❤️' : '🤍'}
-      </BookmarkIcon>
-      </Card>
-    </AlbumDetailsWrapper>
+    </>
+
   );
 };
 

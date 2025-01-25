@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 import useFavorite from '../hooks/useFavorite';
 
-import Loader from '../components/Loader';
-import Pagination from '../components/Pagination';
+import Loader from '../components/shared/Loader';
 import { getArtistAlbums } from '../services/albums';
-import { BookmarkIcon, Title } from '../styles/common.styles';
-import { Card, CoverImage, Text, AlbumDetailsWrapper, DetailWrapper } from '../styles/AlbumCard.styles';
+import Pagination from '../components/shared/Pagination';
+import { BookmarkIcon, AlbumTitle as Title, Card, CardWrapper, Headline } from '../styles/common.styles';
+import { CoverImage, Text, DetailWrapper } from '../styles/AlbumCard.styles';
 
-const ArtistDetails = () => {
+const ArtistAlbums = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = React.useState(1);
   const {
@@ -24,7 +24,10 @@ const ArtistDetails = () => {
   const { id } = useParams<{ id: string; }>();
   const { data, error, isLoading } = useQuery({
     queryKey: ['album', id, currentPage],
-    queryFn: () => getArtistAlbums(id!),
+    queryFn: () => getArtistAlbums(id!, {
+      page: currentPage,
+      per_page: itemsPerPage,
+    }),
   });
 
   const handleBookmarkClick = (id, album) => {
@@ -39,23 +42,18 @@ const ArtistDetails = () => {
   if (error) return <div>Error loading album details</div>;
 
   return (
-    <AlbumDetailsWrapper>
-      <div style={{
-        alignSelf: 'flex-start',
-        margin: '10px'
-      }}>
-        <h1>Artist: {data?.releases[0].artist}</h1>
-        <Pagination
-          currentPage={data?.pagination?.page}
-          totalPages={data?.pagination?.pages}
-          onPageChange={setCurrentPage}
-          perPage={data?.pagination?.per_page}
-          totalItems={data?.pagination?.items}
-        />
-      </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+    <>
+      <Headline>Artist: {data?.releases[0].artist}</Headline>
+      <Pagination
+        currentPage={data?.pagination?.page}
+        totalPages={data?.pagination?.pages}
+        onPageChange={setCurrentPage}
+        perPage={data?.pagination?.per_page}
+        totalItems={data?.pagination?.items}
+      />
+      <CardWrapper>
         {data.releases.map((release: any) => (
-          <Card key={release.id} onClick={() => navigate(`/album/${release.id}`)}>
+          <Card key={release.id} onClick={() => navigate(`/albums/${release.id}`)}>
             <CoverImage src={release.thumb} alt={release.title} />
             <DetailWrapper>
               <Title>{release.title}</Title>
@@ -64,16 +62,16 @@ const ArtistDetails = () => {
             </DetailWrapper>
             <BookmarkIcon onClick={(e: React.MouseEvent) => {
               e.stopPropagation();
-              handleBookmarkClick(release.id, release)
+              handleBookmarkClick(release.id, release);
             }}>
               {isAlbumFavorite(release.id) ? '❤️' : '🤍'}
             </BookmarkIcon>
           </Card>
 
         ))}
-      </div>
-    </AlbumDetailsWrapper>
+      </CardWrapper>
+    </>
   );
 };
 
-export default ArtistDetails;
+export default ArtistAlbums;

@@ -5,7 +5,7 @@ import useFavorite from '../hooks/useFavorite';
 
 import { BookmarkIcon } from '../styles/common.styles';
 import { DetailWrapper } from '../styles/AlbumCard.styles';
-import { Card, CoverImage, Text, Title } from '../styles/common.styles';
+import { Card, CoverImage, Text, AlbumTitle } from '../styles/common.styles';
 
 const AlbumCard: React.FC = (props) => {
   const { cover_image, title, year, country, id } = props.album;
@@ -18,7 +18,7 @@ const AlbumCard: React.FC = (props) => {
   const navigate = useNavigate();
 
   const handleAlbumClick = () => {
-    navigate(`/album/${id}`);
+    navigate(`/albums/${id}`);
   };
 
   const handleBookmarkClick = (id, album) => {
@@ -33,7 +33,7 @@ const AlbumCard: React.FC = (props) => {
     <Card onClick={handleAlbumClick}>
       <CoverImage src={cover_image} alt={title} />
       <DetailWrapper>
-        <Title>{title}</Title>
+        <AlbumTitle>{title}</AlbumTitle>
         <Text>{year}</Text>
         <Text>{country}</Text>
       </DetailWrapper>

@@ -33,6 +33,11 @@ gap: 20px;
 
 export const Text = styled.p`
   color: #aaaaaa;
+  width: 190px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
 `;
 
 export const CoverImage = styled.img`
@@ -42,25 +47,22 @@ export const CoverImage = styled.img`
 `;
 
 export const CardWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
+  grid-auto-rows: auto;
+  gap: 20px;
 `;
 
 export const Card = styled.div`
   position: relative;
   background-color: #1e1e1e;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 15px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease-in-out;
-  width: 220px; /* Fixed width for uniformity */
-  height: 300px; /* Fixed height for uniformity */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
 
   &:hover {
     transform: translateY(-2px);
@@ -68,7 +70,7 @@ export const Card = styled.div`
   }
 `;
 
-export const Title = styled.p`
+export const AlbumTitle = styled(Text)`
   margin: 10px 0;
-  /* text-align: center; */
+  font-size: 0.9rem;
 `;

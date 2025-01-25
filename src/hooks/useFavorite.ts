@@ -61,19 +61,35 @@ const useFavorite = () => {
     });
   };
 
-  const addArtistToFavorites = (artist: Artist) => {
-    if (!favorites.artists.some((a) => a.id === artist.id)) {
-      queryClient.setQueryData<Favorites>(['favorites'], {
-        ...favorites,
-        artists: [...favorites.artists, artist],
-      });
-    }
+  const addArtistToFavorites = (id: any, artist: Artist) => {
+    queryClient.setQueryData<Favorites>(['favorites'], (oldFavorites) => {
+      if (!oldFavorites) {
+        oldFavorites = { albums: [], artists: [] };
+      }
+
+      if (!oldFavorites.artists.some((a) => a.id === artist.id)) {
+        return {
+          ...oldFavorites,
+          artists: [...oldFavorites.artists, artist],
+        };
+      } else {
+        return oldFavorites;
+      }
+    });
+
+
+    const updatedFavorites = queryClient.getQueryData<Favorites>(['favorites']);
+    console.log('Updated Favorites:', updatedFavorites);
   };
 
   const removeArtistFromFavorites = (artistId: string) => {
-    queryClient.setQueryData<Favorites>(['favorites'], {
-      ...favorites,
-      artists: favorites.artists.filter((artist) => artist.id !== artistId),
+    queryClient.setQueryData<Favorites>(['favorites'], (oldFavorites) => {
+      if (!oldFavorites) return initialFavorites;
+
+      return {
+        ...oldFavorites,
+        artists: oldFavorites.artists.filter((artist) => artist.id !== artistId),
+      };
     });
   };
 
@@ -84,9 +100,15 @@ const useFavorite = () => {
     return favorites.albums.some((album) => album.id === albumId);
   };
 
+  const isArtistFavorite = (artistId: string) => {
+    const favorites = getFavorites();
+    return favorites.artists.some((artist) => artist.id === artistId);
+  };
+
   return {
     favorites,
     isAlbumFavorite,
+    isArtistFavorite,
     addAlbumToFavorites,
     removeAlbumFromFavorites,
     addArtistToFavorites,

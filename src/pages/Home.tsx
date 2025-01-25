@@ -4,11 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import Filter from './Filter';
 import { getAlbums } from "../services/albums";
 import AlbumCard from "../components/AlbumCard";
-import Pagination from '../components/Pagination';
+import Pagination from '../components/shared/Pagination';
 
-import { HomeContainer } from '../styles/Home.styles';
-import { CardWrapper, Container, Headline } from '../styles/common.styles';
-import Loader from '../components/Loader';
+import Loader from '../components/shared/Loader';
+import Message from '../components/shared/Message';
+import { CardWrapper, Headline } from '../styles/common.styles';
 
 const Home = () => {
   const [searchText, setSearchText] = React.useState('');
@@ -80,7 +80,7 @@ const Home = () => {
   };
 
   return (
-    <HomeContainer>
+    <>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <input
           id='search'
@@ -95,21 +95,20 @@ const Home = () => {
         handleInputChange={handleInputChange}
         handleResetFilter={handleResetFilter}
       />
-      <Container>
-        <div style={{
-          alignSelf: 'flex-start',
-        }}>
-          <Headline>
-            <p>{getFiltersString()}</p>
-          </Headline>
-          <Pagination
-            currentPage={data?.pagination?.page}
-            totalPages={data?.pagination?.pages}
-            onPageChange={setCurrentPage}
-            perPage={data?.pagination?.per_page}
-            totalItems={data?.pagination?.items}
-          />
-        </div>
+      <>
+        <Headline>
+          <p>{getFiltersString()}</p>
+        </Headline>
+        <Pagination
+          currentPage={data?.pagination?.page}
+          totalPages={data?.pagination?.pages}
+          onPageChange={setCurrentPage}
+          perPage={data?.pagination?.per_page}
+          totalItems={data?.pagination?.items}
+        />
+        {data?.results?.length === 0 && (
+          <Message message='No albums found!' />
+        )}
         {data?.results && (
           <CardWrapper>
             {data.results.map((album: any) => (
@@ -118,8 +117,8 @@ const Home = () => {
           </CardWrapper>
 
         )}
-      </Container>
-    </HomeContainer>
+      </>
+    </>
   );
 };
 
