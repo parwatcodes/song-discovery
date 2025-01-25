@@ -11,6 +11,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: Arial, sans-serif;
     background-color: #121212;
     color: #ffffff;
+    margin-bottom: 100px;
   }
 
   #root {

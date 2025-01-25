@@ -1,5 +1,8 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark as regularBookmark } from '@fortawesome/free-regular-svg-icons';
 
 import useFavorite from '../hooks/useFavorite';
 
@@ -41,7 +44,7 @@ const AlbumCard: React.FC = (props) => {
         event.stopPropagation();
         handleBookmarkClick(id, props.album);
       }}>
-        {isAlbumFavorite(id) ? '❤️' : '🤍'}
+        {isAlbumFavorite(id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} color="#AAAAAA" />}
       </BookmarkIcon>
     </Card>
   );

@@ -1,6 +1,9 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark as regularBookmark } from '@fortawesome/free-regular-svg-icons';
 
 import useFavorite from '../hooks/useFavorite';
 
@@ -67,7 +70,7 @@ const ArtistList = () => {
               event.stopPropagation();
               handleBookmarkClick(artist.id, artist);
             }}>
-              {isArtistFavorite(artist.id) ? '❤️' : '🤍'}
+              {isArtistFavorite(artist.id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} color="#AAAAAA" />}
             </BookmarkIcon>
           </Card>
         ))}

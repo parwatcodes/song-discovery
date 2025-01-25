@@ -1,7 +1,11 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark as regularBookmark } from '@fortawesome/free-regular-svg-icons';
+
+import useFavorite from '../hooks/useFavorite';
 
 import { getAlbum } from '../services/albums';
 import { BookmarkIcon } from '../styles/common.styles';
@@ -12,8 +16,11 @@ import { CoverImage, Text, ArtistName, DetailItem, ItemWrapper, DetailWrapper } 
 
 const AlbumDetails = () => {
   const navigate = useNavigate();
-  const [bookmarked, setBookmarked] = React.useState(false);
-
+  const {
+    isAlbumFavorite,
+    addAlbumToFavorites,
+    removeAlbumFromFavorites,
+  } = useFavorite();
   const { id } = useParams<{ id: string; }>();
   const { data, error, isLoading } = useQuery({
     queryKey: ['album', id],
@@ -24,9 +31,12 @@ const AlbumDetails = () => {
     navigate(`/artists/${id}/albums`);
   };
 
-  const handleBookmarkClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent triggering the album click
-    setBookmarked(!bookmarked);
+  const handleBookmarkClick = (id, album) => {
+    if (isAlbumFavorite(id)) {
+      removeAlbumFromFavorites(id);
+    } else {
+      addAlbumToFavorites(id, album);
+    }
   };
 
   if (isLoading) return <Loader />;
@@ -80,8 +90,11 @@ const AlbumDetails = () => {
               <Text>{data.country}</Text>
               <Text>{data.description}</Text>
             </DetailWrapper>
-            <BookmarkIcon onClick={handleBookmarkClick}>
-              {bookmarked ? '❤️' : '🤍'}
+            <BookmarkIcon onClick={(event: React.MouseEvent) => {
+              event.stopPropagation();
+              handleBookmarkClick(data.id, data);
+            }}>
+              {isAlbumFavorite(data.id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} color="#AAAAAA" />}
             </BookmarkIcon>
           </Card>
         </div>
