@@ -11,8 +11,12 @@ https://songs-discovery-e8gogb4lh-parwats-projects.vercel.app
 ## Features
 
 - Browse and discover new music albums
+- Free search for Artist, Albums, genre, country and many more
 - Filter albums by year, genre, and country
+- View Artists and their albums
 - View album details
+- Add albums to favorite and view them from albums page or a separate Favorite page
+
 
 ## Technologies Used
 
@@ -21,12 +25,16 @@ https://songs-discovery-e8gogb4lh-parwats-projects.vercel.app
 - React Query (for state management, caching and many more)
 - Styled Components
 
+## Client Routes
+
+The Song Discovery app uses React Router for client-side routing. Here are the main routes:
+
+- Home (/): The home page where users can search and filter albums.
+- Album Details (/album/:id): The page that displays detailed information about a specific album.
+- Artist Details (/artists/:id): The page that displays detailed information about a specific artist and their albums.
+- Favorite (/favorites): The page that displays the user's favorite albums and artists.
+
 ## Getting Started
-
-### Prerequisites
-
-- Node.js
-- npm or yarn
 
 ### Installation
 
@@ -56,6 +64,3 @@ https://songs-discovery-e8gogb4lh-parwats-projects.vercel.app
       ```sh
      npm run dev
   2. Open your browser and navigate to http://localhost:5173.
-
-
-
