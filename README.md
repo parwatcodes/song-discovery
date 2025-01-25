@@ -1,5 +1,7 @@
 # Song Discovery
 
+![graph](https://github.com/user-attachments/assets/14e41c30-5727-48e0-b8f3-f3954a2cbac3)
+
 ## Overview
 
 Song Discovery is a web application that allows users to discover new music albums. Users can filter albums by year, genre, and country, and view album details, bookmark albums, songs, artists to their favs.
@@ -54,3 +56,6 @@ https://songs-discovery-e8gogb4lh-parwats-projects.vercel.app
       ```sh
      npm run dev
   2. Open your browser and navigate to http://localhost:5173.
+
+
+
