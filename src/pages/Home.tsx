@@ -53,6 +53,10 @@ const Home = () => {
     }
   });
 
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [searchText, filters.year, filters.genre, filters.country]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
