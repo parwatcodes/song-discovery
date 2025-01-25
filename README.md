@@ -4,6 +4,8 @@
 
 Song Discovery is a web application that allows users to discover new music albums. Users can filter albums by year, genre, and country, and view album details, bookmark albums, songs, artists to their favs.
 
+https://songs-discovery-e8gogb4lh-parwats-projects.vercel.app
+
 ## Features
 
 - Browse and discover new music albums
