@@ -1,43 +1,40 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import Filter from './Filter';
+import useFilters from '../hooks/useFilters';
 import { getAlbums } from "../services/albums";
-import AlbumCard from "../components/AlbumCard";
-import Pagination from '../components/shared/Pagination';
-
 import Loader from '../components/shared/Loader';
 import Message from '../components/shared/Message';
+import useDebouncedValue from '../hooks/useDebouncedValue';
 import { CardWrapper, Headline } from '../styles/common.styles';
+
+const Filter = lazy(() => import('./Filter'));
+const AlbumCard = lazy(() => import('../components/AlbumCard'));
+const Pagination = lazy(() => import('../components/shared/Pagination'));
 
 const Home = () => {
   const [searchText, setSearchText] = React.useState('');
-  const [filters, setFilters] = React.useState({ country: 'Canada', year: '2024', type: 'release', genre: '' });
-  const [debouncedSearchText, setDebouncedSearchText] = React.useState(searchText);
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 30;
 
+  const debouncedSearchText = useDebouncedValue(searchText, 1000);
+  const { filters, setFilters, resetFilters } = useFilters({
+    country: 'Canada',
+    year: '2024',
+    type: 'release',
+    genre: ''
+  });
 
   React.useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchText(searchText);
-    }, 1000);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [searchText]);
+    document.title = 'Songs discovery | Albums';
+  }, []);
 
   React.useEffect(() => {
-    document.title = 'Songs discovery | Albums'
-  }, [])
+    setCurrentPage(1);
+  }, [searchText, filters.year, filters.genre, filters.country]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-  };
-
-  const handleResetFilter = () => {
-    setFilters({ country: '', year: '', type: 'release', genre: '' });
   };
 
   const { data, error, isLoading } = useQuery({
@@ -52,39 +49,23 @@ const Home = () => {
         page: currentPage,
         per_page: itemsPerPage,
       });
-
       return albums;
     }
   });
-
-  React.useEffect(() => {
-    setCurrentPage(1);
-  }, [searchText, filters.year, filters.genre, filters.country]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
-  };
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   const getFiltersString = () => {
     const filterStrings = [];
     if (filters.country) filterStrings.push(`${filters.country}`);
     if (filters.year) filterStrings.push(`${filters.year}`);
     if (filters.genre) filterStrings.push(`${filters.genre}`);
-
-    return filterStrings.length > 0 && `${filterStrings.join(' / ')}`;
+    return filterStrings.length > 0 ? `${filterStrings.join(' / ')}` : '';
   };
 
+  if (isLoading) return <Loader />;
+  if (error) return <Message message="Error loading albums" />;
+
   return (
-    <>
+    <div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <input
           id='search'
@@ -94,15 +75,22 @@ const Home = () => {
           onChange={handleSearchChange}
         />
       </div>
-      <Filter
-        filters={filters}
-        handleInputChange={handleInputChange}
-        handleResetFilter={handleResetFilter}
-      />
-      <>
-        <Headline>
-          <p>{getFiltersString()}</p>
-        </Headline>
+      <Suspense fallback={<Loader />}>
+        <Filter
+          filters={filters}
+          handleInputChange={(e) => setFilters({ ...filters, [e.target.name]: e.target.value })}
+          handleResetFilter={() => resetFilters({
+            country: '',
+            year: '',
+            type: 'release',
+            genre: ''
+          })}
+        />
+      </Suspense>
+      <Headline>
+        <p>{getFiltersString()}</p>
+      </Headline>
+      <Suspense fallback={<Loader />}>
         <Pagination
           currentPage={data?.pagination?.page}
           totalPages={data?.pagination?.pages}
@@ -110,19 +98,20 @@ const Home = () => {
           perPage={data?.pagination?.per_page}
           totalItems={data?.pagination?.items}
         />
-        {data?.results?.length === 0 && (
-          <Message message='No albums found!' />
-        )}
+      </Suspense>
+      {data?.results?.length === 0 && (
+        <Message message='No albums found!' />
+      )}
+      <Suspense fallback={<Loader />}>
         {data?.results && (
           <CardWrapper>
             {data.results.map((album: any) => (
               <AlbumCard key={album.id} album={album} />
             ))}
           </CardWrapper>
-
         )}
-      </>
-    </>
+      </Suspense>
+    </div>
   );
 };
 
