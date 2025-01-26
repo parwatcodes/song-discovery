@@ -24,10 +24,23 @@ const initialFavorites: Favorites = {
 const useFavorite = () => {
   const queryClient = useQueryClient();
 
+
+  // Load favorites from localStorage
+  const loadFavorites = (): Favorites => {
+    const storedFavorites = localStorage.getItem('favorites');
+    return storedFavorites ? JSON.parse(storedFavorites) : initialFavorites;
+  };
+
+  // Save favorites to localStorage
+  const saveFavorites = (favorites: Favorites) => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  };
+
   const { data: favorites } = useQuery({
     queryKey: ['favorites'],
-    initialData: { albums: [], artists: [] },
+    initialData: loadFavorites,
   });
+
 
   const addAlbumToFavorites = (id: any, album: Album) => {
     queryClient.setQueryData<Favorites>(['favorites'], (oldFavorites) => {
@@ -36,10 +49,10 @@ const useFavorite = () => {
       }
 
       if (!oldFavorites.albums.some((a) => a.id === album.id)) {
-        return {
-          ...oldFavorites,
-          albums: [...oldFavorites.albums, album],
-        };
+        const updatedFavorites = { ...oldFavorites, albums: [...oldFavorites.albums, album] };
+        saveFavorites(updatedFavorites);
+
+        return updatedFavorites;
       } else {
         return oldFavorites;
       }
@@ -54,10 +67,12 @@ const useFavorite = () => {
     queryClient.setQueryData<Favorites>(['favorites'], (oldFavorites) => {
       if (!oldFavorites) return initialFavorites;
 
-      return {
+      const updatedFavorites = {
         ...oldFavorites,
         albums: oldFavorites.albums.filter((album) => album.id !== albumId),
       };
+      saveFavorites(updatedFavorites);
+      return updatedFavorites;
     });
   };
 
@@ -68,10 +83,9 @@ const useFavorite = () => {
       }
 
       if (!oldFavorites.artists.some((a) => a.id === artist.id)) {
-        return {
-          ...oldFavorites,
-          artists: [...oldFavorites.artists, artist],
-        };
+        const updatedFavorites = { ...oldFavorites, artists: [...oldFavorites.artists, artist] };
+        saveFavorites(updatedFavorites);
+        return updatedFavorites;
       } else {
         return oldFavorites;
       }
@@ -86,10 +100,12 @@ const useFavorite = () => {
     queryClient.setQueryData<Favorites>(['favorites'], (oldFavorites) => {
       if (!oldFavorites) return initialFavorites;
 
-      return {
+      const updatedFavorites = {
         ...oldFavorites,
         artists: oldFavorites.artists.filter((artist) => artist.id !== artistId),
       };
+      saveFavorites(updatedFavorites);
+      return updatedFavorites;
     });
   };
 
