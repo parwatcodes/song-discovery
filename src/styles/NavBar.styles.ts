@@ -19,6 +19,12 @@ export const NavList = styled.ul`
 
 export const NavItem = styled.li`
   font-size: 35px;
+
+  &.active {
+    a {
+      color: #1ED760;
+    }
+  }
 `;
 
 export const NavLink = styled(Link)`
