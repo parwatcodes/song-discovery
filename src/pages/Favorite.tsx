@@ -50,7 +50,7 @@ const Favorite = () => {
             alignSelf: 'flex-start',
             marginBottom: '20px',
           }}>
-            <Headline>Favorite Albums</Headline>
+            <Headline>Favorite Albums ({favorites.albums.length})</Headline>
           </div>
           <CardWrapper>
             {favorites.albums.map((album) => (
@@ -74,7 +74,7 @@ const Favorite = () => {
             alignSelf: 'flex-start',
             margin: '20px 0',
           }}>
-            <Headline>Favorite Artists</Headline>
+            <Headline>Favorite Artists ({favorites.artists.length})</Headline>
           </div>
           <CardWrapper>
             {favorites.artists.map((artist) => (
