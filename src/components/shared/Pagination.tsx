@@ -1,11 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+
 const PaginationContainer = styled.div`
   display: flex;
   align-items: center;
   margin: 20px 0;
   gap: 10px
+`;
+
+const PaginationButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 100px;
 `;
 
 interface PaginationProps {
@@ -27,13 +38,15 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, perPag
 
   return (
     <PaginationContainer>
-      <button onClick={() => handlePageChange(currentPage - 1)}>
+      <PaginationButton onClick={() => handlePageChange(currentPage - 1)}>
+        <FontAwesomeIcon icon={faChevronLeft} />
         Previous
-      </button>
+      </PaginationButton>
       {currentPage} / {totalPages}
-      <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+      <PaginationButton onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
         Next
-      </button>
+        <FontAwesomeIcon icon={faChevronRight} />
+      </PaginationButton>
       <div>({currentPage * perPage} of {totalItems})</div>
     </PaginationContainer>
   );
