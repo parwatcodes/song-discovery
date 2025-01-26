@@ -50,7 +50,7 @@ export const GlobalStyles = createGlobalStyle`
 
   #search {
     height: 50px;
-    border-radius: 12px;
+    border-radius: 8px;
     padding-left: 20px;
     width: 50%;
   }

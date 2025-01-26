@@ -65,7 +65,7 @@ const Home = () => {
   if (error) return <Message message="Error loading albums" />;
 
   return (
-    <div>
+    <React.Fragment>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <input
           id='search'
@@ -111,7 +111,7 @@ const Home = () => {
           </CardWrapper>
         )}
       </Suspense>
-    </div>
+    </React.Fragment>
   );
 };
 

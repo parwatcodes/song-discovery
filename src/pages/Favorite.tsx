@@ -6,7 +6,6 @@ import { faBookmark as regularBookmark } from '@fortawesome/free-regular-svg-ico
 
 import useFavorite from '../hooks/useFavorite';
 import Message from '../components/shared/Message';
-
 import { Headline, CardWrapper, Card, AlbumTitle as Title, BookmarkIcon, CoverImage } from '../styles/common.styles';
 
 const Favorite = () => {

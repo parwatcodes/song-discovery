@@ -17,15 +17,16 @@ const App: React.FC = () => {
   return (
     <Router>
       <GlobalStyles />
-      <Layout />
       <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/albums/:id" element={<AlbumDetails />} />
-        <Route path="/artists" element={<Artist />} />
-        <Route path="/artists/:id/albums" element={<ArtistAlbums />} />
-        <Route path="/favorites" element={<Favorite />} />
-      </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/albums/:id" element={<AlbumDetails />} />
+            <Route path="/artists" element={<Artist />} />
+            <Route path="/artists/:id/albums" element={<ArtistAlbums />} />
+            <Route path="/favorites" element={<Favorite />} />
+          </Routes>
+        </Layout>
       </Suspense>
     </Router>
   );
