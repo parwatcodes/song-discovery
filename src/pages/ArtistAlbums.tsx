@@ -11,8 +11,8 @@ import useFavorite from '../hooks/useFavorite';
 import Loader from '../components/shared/Loader';
 import { getArtistAlbums } from '../services/albums';
 import Pagination from '../components/shared/Pagination';
-import { BookmarkIcon, AlbumTitle as Title, Card, CardWrapper, Headline } from '../styles/common.styles';
-import { CoverImage, Text, DetailWrapper } from '../styles/AlbumCard.styles';
+import { DetailWrapper } from '../styles/AlbumCard.styles';
+import { BookmarkIcon, AlbumTitle as Title, Card, CardWrapper, Headline, Text, CoverImage } from '../styles/common.styles';
 
 const ArtistAlbums = () => {
   const navigate = useNavigate();
@@ -32,6 +32,10 @@ const ArtistAlbums = () => {
       per_page: itemsPerPage,
     }),
   });
+
+  React.useEffect(() => {
+    document.title = 'Songs discovery | Artist Albums';
+  }, []);
 
   const handleBookmarkClick = (id, album) => {
     if (isAlbumFavorite(id)) {
@@ -67,7 +71,7 @@ const ArtistAlbums = () => {
               e.stopPropagation();
               handleBookmarkClick(release.id, release);
             }}>
-              {isAlbumFavorite(release.id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} color="#AAAAAA" />}
+              {isAlbumFavorite(release.id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} size='2xs' />}
             </BookmarkIcon>
           </Card>
 

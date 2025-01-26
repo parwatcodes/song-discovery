@@ -51,10 +51,7 @@ const Filter: React.FC<FilterProps> = (props) => {
             ))}
           </select>
         </div>
-        <button onClick={handleResetFilter}>Reset filters <span style={{
-          color: 'red',
-          fontWeight: 'bold',
-        }}>X</span></button>
+        <button onClick={handleResetFilter}>Clear filters</button>
       </div>
     </div>
   );

@@ -26,13 +26,12 @@ export const SectionTitle = styled.h2`
 `;
 
 export const List = styled.div`
-display: flex;
-flex-wrap: wrap;
-gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 `;
 
 export const Text = styled.p`
-  color: #aaaaaa;
   width: 190px;
   overflow: hidden;
   white-space: nowrap;
@@ -40,10 +39,16 @@ export const Text = styled.p`
   font-size: 14px;
 `;
 
+export const TrackName = styled(Text)`
+  font-size: 1rem;
+  width: 230px;
+  height: 20px;
+`
 export const CoverImage = styled.img`
   width: 190px;
   height: 190px;
   object-fit: cover;
+  border-radius: 4px;
 `;
 
 export const CardWrapper = styled.div`
@@ -56,13 +61,14 @@ export const CardWrapper = styled.div`
 export const Card = styled.div`
   position: relative;
   background-color: #1e1e1e;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 15px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: fit-content;
 
   &:hover {
     transform: translateY(-2px);
@@ -72,5 +78,9 @@ export const Card = styled.div`
 
 export const AlbumTitle = styled(Text)`
   margin: 10px 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
+`;
+
+export const ArtistName = styled(AlbumTitle)`
+  margin: 10px 0 0 0;
 `;

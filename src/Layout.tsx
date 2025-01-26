@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './pages/Navbar'; // Adjust the import path as necessary
+import Navbar from './pages/NavBar';
 
 const Layout: React.FC = ({ children }) => {
   return (

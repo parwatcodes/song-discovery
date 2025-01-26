@@ -1,20 +1,11 @@
 import styled from "styled-components";
 
-export const CoverImage = styled.img`
-  width: 190px;
-  height: 190px;
-  object-fit: cover;
-`;
-
 export const DetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 2px;
 `;
 
-
-export const Text = styled.p`
-  color: #aaaaaa;
-`;
 
 export const ArtistSection = styled.div`
   font-size: 1.5rem;
@@ -37,6 +28,8 @@ export const ArtistName = styled.h1`
 export const ItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: fit-content;
   gap: 20px
 `;
 
@@ -52,8 +45,38 @@ export const DetailItem = styled.div`
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 1.5rem;
+    font-weight: 500;
     margin: 0;
     color: #ffffff;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.1s ease;
+    font-size: 2rem;
+    font-weight: 500;
+
+    &:hover {
+      color: #0056b3;
+    }
+  }
+`;
+
+export const GoBack = styled.div`
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform .2s;
+
+  &:hover {
+    color: #1ED760;
+    transform: scale(1.1);
   }
 `;

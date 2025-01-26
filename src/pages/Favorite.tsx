@@ -1,13 +1,13 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark as regularBookmark } from '@fortawesome/free-regular-svg-icons';
 
 import useFavorite from '../hooks/useFavorite';
-import { CoverImage } from '../styles/AlbumCard.styles';
-
-import { Headline, CardWrapper, Card, AlbumTitle as Title, BookmarkIcon } from '../styles/common.styles';
 import Message from '../components/shared/Message';
+
+import { Headline, CardWrapper, Card, AlbumTitle as Title, BookmarkIcon, CoverImage } from '../styles/common.styles';
 
 const Favorite = () => {
   const navigate = useNavigate();
@@ -18,6 +18,10 @@ const Favorite = () => {
     removeArtistFromFavorites,
     removeAlbumFromFavorites,
   } = useFavorite();
+
+  React.useEffect(() => {
+    document.title = 'Songs discovery | Favorites';
+  }, []);
 
   const handleAlbumClick = (id: string) => {
     navigate(`/albums/${id}`);

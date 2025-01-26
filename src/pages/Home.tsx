@@ -28,12 +28,16 @@ const Home = () => {
     };
   }, [searchText]);
 
+  React.useEffect(() => {
+    document.title = 'Songs discovery | Albums'
+  }, [])
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
   const handleResetFilter = () => {
-    setFilters({ country: 'Canada', year: '2024', type: 'release', genre: '' });
+    setFilters({ country: '', year: '', type: 'release', genre: '' });
   };
 
   const { data, error, isLoading } = useQuery({

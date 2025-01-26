@@ -44,7 +44,7 @@ const AlbumCard: React.FC = (props) => {
         event.stopPropagation();
         handleBookmarkClick(id, props.album);
       }}>
-        {isAlbumFavorite(id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} color="#AAAAAA" />}
+        {isAlbumFavorite(id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} size='2xs' />}
       </BookmarkIcon>
     </Card>
   );

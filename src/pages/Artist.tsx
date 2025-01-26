@@ -9,10 +9,9 @@ import useFavorite from '../hooks/useFavorite';
 
 import Loader from '../components/shared/Loader';
 import { getArtists } from '../services/artists';
-import { ArtistName } from '../styles/Artist.styles';
-import { CoverImage } from '../styles/AlbumCard.styles';
 import Pagination from '../components/shared/Pagination';
-import { Card, CardWrapper, Headline, BookmarkIcon } from '../styles/common.styles';
+import { DetailWrapper } from '../styles/AlbumCard.styles';
+import { Card, CardWrapper, Headline, BookmarkIcon, CoverImage, ArtistName } from '../styles/common.styles';
 
 const ArtistList = () => {
   const navigate = useNavigate();
@@ -31,6 +30,10 @@ const ArtistList = () => {
       return artists;
     }
   });
+
+  React.useEffect(() => {
+    document.title = 'Songs discovery | Artists';
+  }, []);
 
   const handleBookmarkClick = (id, artist) => {
     console.log('handleBookmarkClick', id, artist);
@@ -64,13 +67,15 @@ const ArtistList = () => {
       <CardWrapper>
         {data?.results.map((artist: { id: string; name: string; cover_image: string; }) => (
           <Card key={artist.id} onClick={() => handleOnArtistClick(artist.id)}>
-            <CoverImage src={artist.cover_image || artist.thumb} alt={artist.title} />
-            <ArtistName>{artist.title}</ArtistName>
+            <CoverImage src={artist.cover_image} alt={artist.title} />
+            <DetailWrapper>
+              <ArtistName>{artist.title}</ArtistName>
+            </DetailWrapper>
             <BookmarkIcon onClick={(event: React.MouseEvent) => {
               event.stopPropagation();
               handleBookmarkClick(artist.id, artist);
             }}>
-              {isArtistFavorite(artist.id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} color="#AAAAAA" />}
+              {isArtistFavorite(artist.id) ? <FontAwesomeIcon icon={solidBookmark} color="#FFD700" /> : <FontAwesomeIcon icon={regularBookmark} size='2xs' />}
             </BookmarkIcon>
           </Card>
         ))}
