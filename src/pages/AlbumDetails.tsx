@@ -61,7 +61,7 @@ const AlbumDetails = () => {
           <Headline>Go Back</Headline>
         </GoBack>
 
-        <div style={{ display: 'flex', gap: '40px', marginTop: '40px' }}>
+        <div style={{ display: 'flex', gap: '40px', margin: '40px 0' }}>
           <ItemWrapper>
             <DetailItem>
               <span>Album:</span>

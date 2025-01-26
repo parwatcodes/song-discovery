@@ -62,7 +62,7 @@ export const DetailItem = styled.div`
     font-weight: 500;
 
     &:hover {
-      color: #0056b3;
+      color:rgb(54, 151, 212);
     }
   }
 `;

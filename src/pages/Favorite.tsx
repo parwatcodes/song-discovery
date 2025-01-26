@@ -43,9 +43,9 @@ const Favorite = () => {
   }
 
   return (
-    <>
+    <React.Fragment>
       {!!favorites.albums.length && (
-        <>
+        <React.Fragment>
           <div style={{
             alignSelf: 'flex-start',
             marginBottom: '20px',
@@ -66,10 +66,10 @@ const Favorite = () => {
               </Card>
             ))}
           </CardWrapper>
-        </>
+        </React.Fragment>
       )}
       {!!favorites.artists.length && (
-        <>
+        <React.Fragment>
           <div style={{
             alignSelf: 'flex-start',
             margin: '20px 0',
@@ -90,9 +90,9 @@ const Favorite = () => {
               </Card>
             ))}
           </CardWrapper>
-        </>
+        </React.Fragment>
       )}
-    </>
+    </React.Fragment>
   );
 };
 

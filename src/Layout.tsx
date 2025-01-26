@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <>
       <Navbar />
         <main style={{
-          minHeight: 'calc(100vh - 250px)',
+          minHeight: 'calc(100vh - 210px)',
         }}>{children}</main>
       <Footer />
     </>

@@ -6,7 +6,12 @@ const Navbar = () => {
   const location = useLocation();
 
   const isActive = (path: string) => {
-    return location.pathname === path;
+    const firstSegment = location.pathname.split('/')[1];
+    if (firstSegment === 'albums' && path === '/') {
+      return true;
+    }
+
+    return `/${firstSegment}` === path;
   };
 
   const Link = ({ children, to }: { children: React.ReactNode; to: string; }) => {

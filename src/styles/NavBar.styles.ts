@@ -30,8 +30,4 @@ export const NavItem = styled.li`
 export const NavLink = styled(Link)`
   color: white;
   text-decoration: none;
-
-  &:hover {
-    color: #1ED760
-  }
 `;
