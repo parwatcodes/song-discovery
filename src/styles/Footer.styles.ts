@@ -19,6 +19,7 @@ export const FooterLinks = styled.div`
     color: #fff;
     margin: 0 10px;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
       color: #1ED760;

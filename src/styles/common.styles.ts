@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 20px;
-`;
-
 export const Headline = styled.div`
   font-size: 2rem;
   font-weight: 500;
@@ -84,3 +76,9 @@ export const AlbumTitle = styled(Text)`
 export const ArtistName = styled(AlbumTitle)`
   margin: 10px 0 0 0;
 `;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px
+`

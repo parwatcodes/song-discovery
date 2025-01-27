@@ -8,13 +8,13 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <>
+    <React.Fragment>
       <Navbar />
-        <main style={{
-          minHeight: 'calc(100vh - 210px)',
-        }}>{children}</main>
+      <main style={{
+        minHeight: 'calc(100vh - 210px)',
+      }}>{children}</main>
       <Footer />
-    </>
+    </React.Fragment>
   );
 };
 

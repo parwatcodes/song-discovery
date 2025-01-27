@@ -61,7 +61,6 @@ const styles = {
   filterContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
-    padding: '20px 20px 0 0',
   },
   form: {
     display: 'flex',

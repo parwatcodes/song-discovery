@@ -12,7 +12,7 @@ import Loader from '../components/shared/Loader';
 import { getArtistAlbums } from '../services/albums';
 import Pagination from '../components/shared/Pagination';
 import { DetailWrapper } from '../styles/AlbumCard.styles';
-import { BookmarkIcon, AlbumTitle as Title, Card, CardWrapper, Headline, Text, CoverImage } from '../styles/common.styles';
+import { BookmarkIcon, AlbumTitle as Title, Card, CardWrapper, Headline, Text, CoverImage, Container as ArtistContainer } from '../styles/common.styles';
 
 const ArtistAlbums = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const ArtistAlbums = () => {
   if (error) return <div>Error loading album details</div>;
 
   return (
-    <>
+    <ArtistContainer>
       <Headline>Artist: {data?.releases[0].artist}</Headline>
       <Pagination
         currentPage={data?.pagination?.page}
@@ -77,7 +77,7 @@ const ArtistAlbums = () => {
 
         ))}
       </CardWrapper>
-    </>
+    </ArtistContainer>
   );
 };
 

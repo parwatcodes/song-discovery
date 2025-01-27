@@ -5,16 +5,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark as regularBookmark } from '@fortawesome/free-regular-svg-icons';
 
+import useSearch from '../hooks/useSearch';
 import useFavorite from '../hooks/useFavorite';
 
 import Loader from '../components/shared/Loader';
 import { getArtists } from '../services/artists';
 import Pagination from '../components/shared/Pagination';
 import { DetailWrapper } from '../styles/AlbumCard.styles';
-import { Card, CardWrapper, Headline, BookmarkIcon, CoverImage, ArtistName } from '../styles/common.styles';
+import { Card, CardWrapper, Headline, BookmarkIcon, CoverImage, ArtistName, Container as ArtistContainer } from '../styles/common.styles';
 
 const ArtistList = () => {
   const navigate = useNavigate();
+
+  const { searchText, debouncedSearchText, handleSearchChange } = useSearch('', 1000);
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 30;
   const {
@@ -24,9 +27,9 @@ const ArtistList = () => {
   } = useFavorite();
 
   const { data, error, isLoading } = useQuery({
-    queryKey: ['artists', currentPage],
+    queryKey: ['artists', currentPage, debouncedSearchText],
     queryFn: async () => {
-      const artists = await getArtists({ type: 'artist', page: currentPage, per_page: itemsPerPage });
+      const artists = await getArtists({ type: 'artist', page: currentPage, per_page: itemsPerPage, searchText: debouncedSearchText });
       return artists;
     }
   });
@@ -36,7 +39,6 @@ const ArtistList = () => {
   }, []);
 
   const handleBookmarkClick = (id, artist) => {
-    console.log('handleBookmarkClick', id, artist);
     if (isArtistFavorite(id)) {
       removeArtistFromFavorites(id);
     } else {
@@ -53,17 +55,24 @@ const ArtistList = () => {
   if (error) return <div>Error loading artists</div>;
 
   return (
-    <>
-      <div>
-        <Headline>List of Artists</Headline>
-        <Pagination
-          currentPage={data?.pagination?.page}
-          totalPages={data?.pagination?.pages}
-          onPageChange={setCurrentPage}
-          perPage={data?.pagination?.per_page}
-          totalItems={data?.pagination?.items}
+    <ArtistContainer>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <input
+          id='search'
+          type="text"
+          placeholder='Search artists...'
+          value={searchText}
+          onChange={handleSearchChange}
         />
       </div>
+      <Headline>List of Artists</Headline>
+      <Pagination
+        currentPage={data?.pagination?.page}
+        totalPages={data?.pagination?.pages}
+        onPageChange={setCurrentPage}
+        perPage={data?.pagination?.per_page}
+        totalItems={data?.pagination?.items}
+      />
       <CardWrapper>
         {data?.results.map((artist: { id: string; name: string; cover_image: string; }) => (
           <Card key={artist.id} onClick={() => handleOnArtistClick(artist.id)}>
@@ -80,7 +89,7 @@ const ArtistList = () => {
           </Card>
         ))}
       </CardWrapper>
-    </>
+    </ArtistContainer>
   );
 };
 
