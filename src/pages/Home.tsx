@@ -1,23 +1,23 @@
 import React, { Suspense, lazy } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
+import useSearch from '../hooks/useSearch';
 import useFilters from '../hooks/useFilters';
+
 import { getAlbums } from "../services/albums";
 import Loader from '../components/shared/Loader';
 import Message from '../components/shared/Message';
-import useDebouncedValue from '../hooks/useDebouncedValue';
-import { CardWrapper, Headline } from '../styles/common.styles';
+import { CardWrapper, Headline, Container as HomeContainer } from '../styles/common.styles';
 
 const Filter = lazy(() => import('./Filter'));
 const AlbumCard = lazy(() => import('../components/AlbumCard'));
 const Pagination = lazy(() => import('../components/shared/Pagination'));
 
 const Home = () => {
-  const [searchText, setSearchText] = React.useState('');
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 30;
 
-  const debouncedSearchText = useDebouncedValue(searchText, 1000);
+  const { searchText, debouncedSearchText, handleSearchChange } = useSearch('', 1000);
   const { filters, setFilters, resetFilters } = useFilters({
     country: 'Canada',
     year: '2024',
@@ -32,10 +32,6 @@ const Home = () => {
   React.useEffect(() => {
     setCurrentPage(1);
   }, [searchText, filters.year, filters.genre, filters.country]);
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
 
   const { data, error, isLoading } = useQuery({
     queryKey: ['albums', filters, debouncedSearchText, currentPage],
@@ -58,6 +54,7 @@ const Home = () => {
     if (filters.country) filterStrings.push(`${filters.country}`);
     if (filters.year) filterStrings.push(`${filters.year}`);
     if (filters.genre) filterStrings.push(`${filters.genre}`);
+
     return filterStrings.length > 0 ? `${filterStrings.join(' / ')}` : '';
   };
 
@@ -65,12 +62,12 @@ const Home = () => {
   if (error) return <Message message="Error loading albums" />;
 
   return (
-    <React.Fragment>
+    <HomeContainer>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <input
           id='search'
           type="text"
-          placeholder='Search...'
+          placeholder='Search albums...'
           value={searchText}
           onChange={handleSearchChange}
         />
@@ -88,7 +85,7 @@ const Home = () => {
         />
       </Suspense>
       <Headline>
-        <p>{getFiltersString()}</p>
+        {getFiltersString()}
       </Headline>
       <Suspense fallback={<Loader />}>
         <Pagination
@@ -111,7 +108,7 @@ const Home = () => {
           </CardWrapper>
         )}
       </Suspense>
-    </React.Fragment>
+    </HomeContainer>
   );
 };
 

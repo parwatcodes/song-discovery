@@ -49,7 +49,7 @@ const AlbumDetails = () => {
   if (error) return <div>Error loading album details</div>;
 
   return (
-    <>
+    <React.Fragment>
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -129,8 +129,7 @@ const AlbumDetails = () => {
           </Card>
         </div>
       </div>
-    </>
-
+    </React.Fragment>
   );
 };
 

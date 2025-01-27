@@ -7,7 +7,6 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 const PaginationContainer = styled.div`
   display: flex;
   align-items: center;
-  margin: 20px 0;
   gap: 10px
 `;
 
