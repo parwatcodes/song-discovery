@@ -2,6 +2,10 @@
 
 ![graph](https://github.com/user-attachments/assets/14e41c30-5727-48e0-b8f3-f3954a2cbac3)
 
+## Detailed documentation
+
+https://docs.google.com/document/d/1H2BgyWttFu6OacthIx3BD2SieEHswNeIH8Vwmuf7bg4/edit?usp=sharing
+
 ## Overview
 
 Song Discovery is a web application that allows users to discover new music albums. Users can filter albums by year, genre, and country, and view album details, bookmark albums, songs, artists to their favs.
