@@ -52,9 +52,9 @@ The Song Discovery app uses React Router for client-side routing. Here are the m
    npm install
     # or
     yarn install
-3. Create a .env file in the root directory and add your API base URL:
+3. Create a .env.local file in the root directory and add your API base URL:
     ```sh
-    # .env
+    # .env.local
     VITE_DISCOGS_API_KEY=YOUR_API_KEY
     VITE_DISCOGS_API_SECRET=YOUR_API_SECRET
 
