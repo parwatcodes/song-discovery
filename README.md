@@ -44,9 +44,9 @@ The Song Discovery app uses React Router for client-side routing. Here are the m
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/song-discovery-by-layla.git
-
-   cd song-discovery-by-layla
+   git clone https://github.com/parwatcodes/song-discovery.git
+   
+   cd song-discovery
 2. Install dependencies:
     ```sh
    npm install
