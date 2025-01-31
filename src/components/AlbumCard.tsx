@@ -10,8 +10,20 @@ import { BookmarkIcon } from '../styles/common.styles';
 import { DetailWrapper } from '../styles/AlbumCard.styles';
 import { Card, CoverImage, Text, AlbumTitle } from '../styles/common.styles';
 
-const AlbumCard: React.FC = (props) => {
+interface AlbumCardProps {
+  album: {
+    cover_image: string;
+    title: string;
+    year: string;
+    country: string;
+    id: string;
+  };
+  showCountry?: boolean;
+}
+
+const AlbumCard: React.FC<AlbumCardProps> = (props) => {
   const { cover_image, title, year, country, id } = props.album;
+  const [artistName, albumName] = title.split(' - ');
   const {
     isAlbumFavorite,
     addAlbumToFavorites,
@@ -36,9 +48,9 @@ const AlbumCard: React.FC = (props) => {
     <Card onClick={handleAlbumClick}>
       <CoverImage src={cover_image} alt={title} />
       <DetailWrapper>
-        <AlbumTitle>{title}</AlbumTitle>
-        <Text>{year}</Text>
-        <Text>{country}</Text>
+        <AlbumTitle> {albumName}</AlbumTitle>
+        <Text>{year || 'N/A'} - {artistName}</Text>
+        {props.showCountry && <Text>{country}</Text>}
       </DetailWrapper>
       <BookmarkIcon onClick={(event: React.MouseEvent) => {
         event.stopPropagation();

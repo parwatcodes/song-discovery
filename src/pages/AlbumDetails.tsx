@@ -81,7 +81,7 @@ const AlbumDetails = () => {
             </DetailItem>
             <DetailItem>
               <span>Released Date:</span>
-              <h1>{data.released_formatted}</h1>
+              <h1>{data.released_formatted || 'N/A'}</h1>
             </DetailItem>
             <DetailItem>
               <span>Country:</span>
