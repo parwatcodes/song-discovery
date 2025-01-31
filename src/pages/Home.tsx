@@ -103,7 +103,7 @@ const Home = () => {
         {data?.results && (
           <CardWrapper>
             {data.results.map((album: any) => (
-              <AlbumCard key={album.id} album={album} />
+              <AlbumCard key={album.id} album={album} showCountry={!filters.country} />
             ))}
           </CardWrapper>
         )}
